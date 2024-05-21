@@ -2,6 +2,8 @@
 // Use of this source code is governed by a MIT-style license
 // that can be found in the LICENSE file.
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import '../calendar_view.dart';
@@ -44,6 +46,9 @@ class CalendarEventData<T extends Object?> {
   /// Define style of description.
   final TextStyle? descriptionStyle;
 
+  final dynamic appointmentObject;
+
+
   /// {@macro calendar_event_data_doc}
   CalendarEventData({
     required this.title,
@@ -55,6 +60,7 @@ class CalendarEventData<T extends Object?> {
     this.endTime,
     this.titleStyle,
     this.descriptionStyle,
+    this.appointmentObject,
     DateTime? endDate,
   })  : _endDate = endDate?.withoutTime,
         date = date.withoutTime;
@@ -101,6 +107,9 @@ class CalendarEventData<T extends Object?> {
         "title": title,
         "description": description,
         "endDate": endDate,
+        "appointmentObject": 
+        appointmentObject != null?
+          jsonEncode(appointmentObject): null,
       };
 
   /// Returns new object of [CalendarEventData] with the updated values defined
@@ -117,6 +126,7 @@ class CalendarEventData<T extends Object?> {
     TextStyle? descriptionStyle,
     DateTime? endDate,
     DateTime? date,
+    dynamic appointmentObject,
   }) {
     return CalendarEventData(
       title: title ?? this.title,
@@ -129,6 +139,7 @@ class CalendarEventData<T extends Object?> {
       endDate: endDate ?? this.endDate,
       event: event ?? this.event,
       titleStyle: titleStyle ?? this.titleStyle,
+      appointmentObject: appointmentObject ?? this.appointmentObject,
     );
   }
 
@@ -155,6 +166,7 @@ class CalendarEventData<T extends Object?> {
         titleStyle == other.titleStyle &&
         descriptionStyle == other.descriptionStyle &&
         description == other.description;
+        
   }
 
   @override
